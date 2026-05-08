@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron House — CrossFit & Treino Funcional · Campinas</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── HOME EXCLUSIVO ── */
+
+/* HERO */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 640px;
+  display: flex; align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=85') center/cover no-repeat;
+  filter: brightness(.28) saturate(.4) contrast(1.2);
+  z-index: 0;
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+
+#hero:hover .hero-bg { transform: scale(1); }
+
+.hero-noise {
+  position: absolute; inset: 0; z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-linha-v {
+  position: absolute; top: 0; left: 3rem; bottom: 0;
+  width: 1px; background: rgba(229,62,62,.2); z-index: 2;
+}
+
+.hero-content {
+  position: relative; z-index: 3;
+  padding: 3rem 3rem 5rem;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .3em; text-transform: uppercase;
+  color: var(--vermelho); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  opacity: 0; animation: fadeUp .7s ease forwards .2s;
+}
+
+.hero-eyebrow::before {
+  content: ''; display: block;
+  width: 30px; height: 1px; background: var(--vermelho);
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 15vw, 13rem);
+  letter-spacing: .02em; line-height: .88;
+  color: var(--branco);
+  margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeUp .7s ease forwards .4s;
+  position: relative;
+}
+
+.hero-title .red { color: var(--vermelho); }
+
+/* efeito glitch no título */
+.hero-title::before {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  color: var(--vermelho);
+  animation: glitch 4s infinite 2s;
+  opacity: .15;
+}
+
+.hero-bottom {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+  opacity: 0; animation: fadeUp .7s ease forwards .6s;
+}
+
+.hero-sub {
+  font-size: 1rem; font-weight: 300;
+  color: rgba(240,237,232,.55);
+  max-width: 360px; line-height: 1.75;
+}
+
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.hero-scroll {
+  position: absolute; right: 3rem; bottom: 5rem; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  animation: bounce 2.5s infinite;
+}
+
+.hero-scroll span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .65rem; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(240,237,232,.3);
+  writing-mode: vertical-rl;
+}
+
+.hero-scroll-line { width: 1px; height: 50px; background: rgba(229,62,62,.3); }
+
+/* CONTADOR */
+.sec-contador {
+  background: var(--vermelho);
+  padding: 2.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border-bottom: 1px solid var(--verm-esc);
+}
+
+.contador-item {
+  text-align: center;
+  padding: 1rem;
+  border-right: 1px solid rgba(10,10,10,.15);
+}
+.contador-item:last-child { border-right: none; }
+
+.count-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: .04em; line-height: 1;
+  color: var(--preto);
+}
+
+.count-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(10,10,10,.55);
+  margin-top: .25rem;
+}
+
+/* MODALIDADES PREVIEW */
+.sec-modalidades {
+  padding: 6rem 3rem;
+  background: var(--preto);
+}
+
+.sec-header {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; flex-wrap: wrap;
+  gap: 1.5rem; margin-bottom: 3rem;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--cinza);
+  border: 1px solid var(--cinza);
+}
+
+.modal-card {
+  position: relative; overflow: hidden;
+  height: 420px;
+  cursor: none;
+}
+
+.modal-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.35) saturate(.3);
+  transition: filter .5s, transform .6s;
+}
+
+.modal-card:hover img {
+  filter: brightness(.2) saturate(.2);
+  transform: scale(1.06);
+}
+
+.modal-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,.95) 0%, transparent 60%);
+  z-index: 1;
+}
+
+.modal-card-red {
+  position: absolute; inset: 0;
+  background: var(--vermelho);
+  opacity: 0; z-index: 1;
+  mix-blend-mode: multiply;
+  transition: opacity .4s;
+}
+
+.modal-card:hover .modal-card-red { opacity: .35; }
+
+.modal-card-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 2rem 1.75rem; z-index: 2;
+}
+
+.modal-card-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--vermelho); margin-bottom: .5rem;
+}
+
+.modal-card-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: .04em; line-height: 1;
+  color: var(--branco); margin-bottom: .5rem;
+}
+
+.modal-card-link {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(240,237,232,.4);
+  text-decoration: none; display: flex; align-items: center; gap: .4rem;
+  transition: color .2s, gap .2s;
+}
+
+.modal-card:hover .modal-card-link { color: var(--vermelho); gap: .7rem; }
+
+/* POR QUE IRON HOUSE */
+.sec-porque {
+  background: var(--preto-2);
+  padding: 6rem 3rem;
+  border-top: 1px solid var(--cinza);
+}
+
+.porque-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--cinza);
+  margin-top: 3rem;
+}
+
+.porque-item {
+  background: var(--preto-2);
+  padding: 3rem 2.5rem;
+  transition: background .2s;
+}
+
+.porque-item:hover { background: var(--preto-3); }
+
+.porque-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; letter-spacing: .04em; line-height: 1;
+  color: rgba(229,62,62,.15);
+  margin-bottom: 1.5rem;
+  transition: color .3s;
+}
+
+.porque-item:hover .porque-num { color: rgba(229,62,62,.4); }
+
+.porque-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--branco); margin-bottom: .75rem;
+}
+
+.porque-texto {
+  font-size: .9rem; font-weight: 300;
+  color: var(--cinza-med); line-height: 1.8;
+}
+
+/* TICKER */
+.ticker-wrap {
+  background: var(--preto-3);
+  border-top: 1px solid var(--cinza);
+  border-bottom: 1px solid var(--cinza);
+  padding: 1.1rem 0; overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: inline-flex; gap: 2rem;
+  animation: ticker 22s linear infinite;
+}
+
+.ticker-track span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: .12em;
+  color: rgba(240,237,232,.2);
+  display: flex; align-items: center; gap: .6rem; flex-shrink: 0;
+}
+
+.ticker-track span i {
+  color: var(--vermelho); font-size: .7rem;
+  transform: rotate(45deg);
+}
+
+/* DEPOIMENTOS */
+.sec-dep {
+  background: var(--preto);
+  padding: 6rem 3rem;
+  border-top: 1px solid var(--cinza);
+}
+
+.dep-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--cinza);
+  margin-top: 3rem;
+}
+
+.dep-slide {
+  display: none;
+  background: var(--preto-2);
+  padding: 3.5rem;
+}
+
+.dep-slide.active { display: block; }
+
+.dep-quote {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.4rem; font-weight: 400; font-style: italic;
+  color: var(--branco); line-height: 1.55;
+  margin-bottom: 2rem;
+  border-left: 3px solid var(--vermelho);
+  padding-left: 1.5rem;
+}
+
+.dep-autor { display: flex; align-items: center; gap: 1rem; }
+.dep-foto { width: 48px; height: 48px; border-radius: 0; object-fit: cover; filter: saturate(.3); }
+.dep-nome { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--branco); }
+.dep-tipo { font-size: .8rem; color: var(--cinza-med); }
+.dep-stars { color: var(--vermelho); font-size: .8rem; letter-spacing: .1em; }
+
+.dep-controles {
+  background: var(--preto-3);
+  padding: 2rem 3.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--cinza);
+  grid-column: span 2;
+}
+
+.dep-btn {
+  width: 40px; height: 40px;
+  border: 1px solid var(--cinza);
+  background: none; color: var(--cinza-med);
+  display: flex; align-items: center; justify-content: center;
+  cursor: none; transition: border-color .2s, color .2s;
+}
+.dep-btn:hover { border-color: var(--vermelho); color: var(--vermelho); }
+
+.dep-dots { display: flex; gap: .4rem; flex: 1; }
+.dep-dot {
+  width: 24px; height: 2px;
+  background: var(--cinza); border: none; padding: 0; cursor: none;
+  transition: background .2s, width .2s;
+}
+.dep-dot.active { background: var(--vermelho); width: 40px; }
+
+/* CTA FINAL */
+.sec-cta-final {
+  background: var(--vermelho);
+  padding: 6rem 3rem;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+
+.cta-bg-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20vw; letter-spacing: .04em;
+  color: rgba(10,10,10,.1); pointer-events: none;
+  white-space: nowrap;
+}
+
+.cta-final-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: .04em; line-height: .9;
+  color: var(--preto);
+  position: relative; z-index: 1;
+  margin-bottom: 1rem;
+}
+
+.cta-final-sub {
+  font-size: 1rem; font-weight: 300;
+  color: rgba(10,10,10,.65);
+  margin-bottom: 2.5rem;
+  position: relative; z-index: 1;
+}
+
+.btn-iron-dark {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  background: var(--preto); color: var(--branco);
+  padding: .9rem 2rem; text-decoration: none; cursor: none;
+  transition: background .2s;
+  position: relative; z-index: 1;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-iron-dark:hover { background: var(--preto-3); color: var(--branco); }
+
+/* RESPONSIVO HOME */
+@media (max-width: 991px) {
+  .hero-content { padding: 3rem 1.5rem 4rem; }
+  .hero-linha-v { left: 1.5rem; }
+  .hero-scroll { right: 1.5rem; }
+  .sec-contador { grid-template-columns: repeat(2, 1fr); padding: 2rem 1.5rem; }
+  .modal-grid { grid-template-columns: 1fr 1fr; }
+  .modal-card { height: 280px; }
+  .sec-modalidades, .sec-porque, .sec-dep { padding: 4rem 1.5rem; }
+  .porque-grid { grid-template-columns: 1fr; }
+  .dep-wrapper { grid-template-columns: 1fr; }
+  .dep-controles { grid-column: span 1; }
+  .sec-cta-final { padding: 4rem 1.5rem; }
+}
+
+@media (max-width: 576px) {
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-card { height: 260px; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<a href="https://wa.me/5519999990000" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">IRON<span>HOUSE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="modalidades.html">Modalidades</a></li>
+    <li><a href="planos.html">Planos</a></li>
+    <li><a href="equipe.html">Equipe</a></li>
+    <li><a href="contato.html">Contato</a></li>
+    <li><a href="https://wa.me/5519999990000" class="nav-cta" target="_blank">Matricule-se</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-linha-v"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">CrossFit & Treino Funcional · Campinas, SP</p>
+    <h1 class="hero-title" data-text="IRON HOUSE">
+      IRON<br><span class="red">HOUSE</span>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">Aqui o treino é sério. O resultado também. Venha descobrir do que você é capaz.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5519999990000" class="btn-iron" target="_blank">
+          <i class="bi bi-lightning-charge-fill"></i>Aula grátis
+        </a>
+        <a href="modalidades.html" class="btn-outline-iron">
+          Ver modalidades <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- CONTADOR -->
+<div class="sec-contador">
+  <div class="contador-item reveal">
+    <div class="count-num" data-target="12" data-suffix="+">0</div>
+    <div class="count-lbl">Anos de estrada</div>
+  </div>
+  <div class="contador-item reveal" data-delay=".1">
+    <div class="count-num" data-target="8">0</div>
+    <div class="count-lbl">Coaches certificados</div>
+  </div>
+  <div class="contador-item reveal" data-delay=".2">
+    <div class="count-num" data-target="2500" data-suffix="+">0</div>
+    <div class="count-lbl">Alunos formados</div>
+  </div>
+  <div class="contador-item reveal" data-delay=".3">
+    <div class="count-num" data-target="4" data-suffix="">0</div>
+    <div class="count-lbl">Modalidades</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span><i class="bi bi-diamond-fill"></i>CrossFit</span>
+    <span><i class="bi bi-diamond-fill"></i>Musculação</span>
+    <span><i class="bi bi-diamond-fill"></i>Funcional</span>
+    <span><i class="bi bi-diamond-fill"></i>Spinning</span>
+    <span><i class="bi bi-diamond-fill"></i>CrossFit</span>
+    <span><i class="bi bi-diamond-fill"></i>Musculação</span>
+    <span><i class="bi bi-diamond-fill"></i>Funcional</span>
+    <span><i class="bi bi-diamond-fill"></i>Spinning</span>
+    <span><i class="bi bi-diamond-fill"></i>CrossFit</span>
+    <span><i class="bi bi-diamond-fill"></i>Musculação</span>
+    <span><i class="bi bi-diamond-fill"></i>Funcional</span>
+    <span><i class="bi bi-diamond-fill"></i>Spinning</span>
+  </div>
+</div>
+
+<!-- MODALIDADES PREVIEW -->
+<section class="sec-modalidades">
+  <div class="sec-header reveal">
+    <div>
+      <span class="sec-label">O que treinamos</span>
+      <h2 class="sec-title">MODALIDADES</h2>
+    </div>
+    <a href="modalidades.html" class="btn-outline-iron">Ver todas <i class="bi bi-arrow-right"></i></a>
+  </div>
+
+  <div class="modal-grid">
+    <div class="modal-card reveal">
+      <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&q=80" alt="CrossFit" loading="lazy">
+      <div class="modal-card-overlay"></div>
+      <div class="modal-card-red"></div>
+      <div class="modal-card-content">
+        <div class="modal-card-num"></div>
+        <div class="modal-card-nome">CrossFit</div>
+        <a href="modalidades.html" class="modal-card-link">Saiba mais <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="modal-card reveal" data-delay=".1">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80" alt="Musculação" loading="lazy">
+      <div class="modal-card-overlay"></div>
+      <div class="modal-card-red"></div>
+      <div class="modal-card-content">
+        <div class="modal-card-num"></div>
+        <div class="modal-card-nome">Musculação</div>
+        <a href="modalidades.html" class="modal-card-link">Saiba mais <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="modal-card reveal" data-delay=".2">
+      <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80" alt="Funcional" loading="lazy">
+      <div class="modal-card-overlay"></div>
+      <div class="modal-card-red"></div>
+      <div class="modal-card-content">
+        <div class="modal-card-num"></div>
+        <div class="modal-card-nome">Funcional</div>
+        <a href="modalidades.html" class="modal-card-link">Saiba mais <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="modal-card reveal" data-delay=".3">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Spinning" loading="lazy">
+      <div class="modal-card-overlay"></div>
+      <div class="modal-card-red"></div>
+      <div class="modal-card-content">
+        <div class="modal-card-num"></div>
+        <div class="modal-card-nome">Spinning</div>
+        <a href="modalidades.html" class="modal-card-link">Saiba mais <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE IRON HOUSE -->
+<section class="sec-porque">
+  <div class="reveal">
+    <span class="sec-label">Nossos diferenciais</span>
+    <h2 class="sec-title">POR QUE<br>IRON HOUSE</h2>
+  </div>
+  <div class="porque-grid">
+    <div class="porque-item reveal">
+      <div class="porque-num">01</div>
+      <div class="porque-titulo">Coaches de elite</div>
+      <p class="porque-texto">Todos os nossos coaches são certificados internacionalmente. Aqui você não fica no escuro — tem orientação técnica em cada movimento, em cada treino.</p>
+    </div>
+    <div class="porque-item reveal" data-delay=".1">
+      <div class="porque-num">02</div>
+      <div class="porque-titulo">Equipamentos de ponta</div>
+      <p class="porque-texto">Infraestrutura completa com equipamentos importados. Barras olímpicas, plataformas, assault bikes, rowers e muito mais. Você tem o que precisa pra ir longe.</p>
+    </div>
+    <div class="porque-item reveal" data-delay=".2">
+      <div class="porque-num">03</div>
+      <div class="porque-titulo">Comunidade real</div>
+      <p class="porque-texto">A Iron House tem uma cultura diferente. Aqui todo mundo empurra todo mundo. É o tipo de lugar onde você vai pra treinar e acaba ficando pelos amigos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="sec-dep">
+  <div class="sec-header reveal">
+    <div>
+      <span class="sec-label">Quem treina aqui</span>
+      <h2 class="sec-title">RESULTADOS<br>REAIS</h2>
+    </div>
+  </div>
+
+  <div class="dep-wrapper">
+    <div class="dep-slide active">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-quote">"Em 6 meses na Iron House perdi 18kg e aprendi a levantar peso de verdade. Melhor decisão da minha vida. Os coaches são outra categoria."</p>
+      <div class="dep-autor">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Ricardo" class="dep-foto">
+        <div>
+          <div class="dep-nome">Ricardo Alves</div>
+          <div class="dep-tipo">Aluno há 2 anos · CrossFit</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-slide">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-quote">"Nunca pensei que ia me apaixonar por CrossFit. Vim com medo, fui acolhido, fiquei pelo resultado. A comunidade aqui é incomparável."</p>
+      <div class="dep-autor">
+        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Camila" class="dep-foto">
+        <div>
+          <div class="dep-nome">Camila Torres</div>
+          <div class="dep-tipo">Aluna há 1 ano · Funcional + CrossFit</div>
+        </div>
+      </div>
+    </div>
+    <div class="dep-slide">
+      <div class="dep-stars">★★★★★</div>
+      <p class="dep-quote">"Treinei em várias academias em Campinas. A Iron House é em outro nível. Equipamento bom, coach presente, resultado garantido."</p>
+      <div class="dep-autor">
+        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Felipe" class="dep-foto">
+        <div>
+          <div class="dep-nome">Felipe Gomes</div>
+          <div class="dep-tipo">Aluno há 3 anos · Musculação</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dep-controles">
+      <button class="dep-btn" id="depPrev"><i class="bi bi-arrow-left"></i></button>
+      <div class="dep-dots" id="depDots"></div>
+      <button class="dep-btn" id="depNext"><i class="bi bi-arrow-right"></i></button>
+      <a href="planos.html" class="btn-iron ms-auto">Ver planos <i class="bi bi-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="sec-cta-final">
+  <div class="cta-bg-text">IRON</div>
+  <div class="reveal" style="position:relative;z-index:1">
+    <h2 class="cta-final-title">SUA PRIMEIRA<br>AULA É GRÁTIS.</h2>
+    <p class="cta-final-sub">Sem compromisso. Sem desculpa. Só você e a barra.</p>
+    <a href="https://wa.me/5519999990000" class="btn-iron-dark" target="_blank">
+      <i class="bi bi-whatsapp"></i>Agendar aula grátis
+    </a>
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="rodape">
+  <div class="rodape-grid">
+    <div>
+      <a href="index.html" class="rodape-brand">IRON<span>HOUSE</span></a>
+      <p class="rodape-desc">CrossFit & Treino Funcional em Campinas. Aqui o treino é sério. O resultado também.</p>
+      <div class="rodape-sociais">
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-youtube"></i></a>
+        <a href="#"><i class="bi bi-tiktok"></i></a>
+      </div>
+    </div>
+    <div>
+      <p class="rodape-titulo">Navegação</p>
+      <ul class="rodape-lista">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modalidades.html">Modalidades</a></li>
+        <li><a href="planos.html">Planos</a></li>
+        <li><a href="equipe.html">Equipe</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="rodape-titulo">Contato</p>
+      <p class="rodape-info">
+        <i class="bi bi-geo-alt-fill"></i>Rua João Barreto, 320 – Cambuí<br>
+        Campinas, SP – 13025-000<br><br>
+        <i class="bi bi-clock-fill"></i>Seg–Sex: 6h às 22h<br>
+        Sáb: 8h às 16h · Dom: 9h às 13h<br><br>
+        <i class="bi bi-whatsapp"></i>(19) 99999-0000
+      </p>
+    </div>
+  </div>
+  <div class="rodape-bottom">
+    <p>© 2026 Iron House CrossFit & Treino Funcional · Todos os direitos reservados</p>
+    <p class="rodape-ficticio"><i class="bi bi-info-circle me-1"></i>Este é um estabelecimento fictício criado exclusivamente para fins de portfólio.</p>
+    <p class="rodape-credito">Site desenvolvido por <a href="#">Marco</a> · Portfólio de desenvolvimento web</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+// Depoimentos
+const depSlides = document.querySelectorAll('.dep-slide');
+const depDots   = document.getElementById('depDots');
+let depCur = 0, depTimer;
+
+depSlides.forEach((_, i) => {
+  const d = document.createElement('button');
+  d.className = 'dep-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goToDep(i);
+  depDots.appendChild(d);
+});
+
+function goToDep(n) {
+  depSlides[depCur].classList.remove('active');
+  depDots.children[depCur].classList.remove('active');
+  depCur = (n + depSlides.length) % depSlides.length;
+  depSlides[depCur].classList.add('active');
+  depDots.children[depCur].classList.add('active');
+  clearInterval(depTimer);
+  depTimer = setInterval(() => goToDep(depCur + 1), 6000);
+}
+
+document.getElementById('depNext').onclick = () => goToDep(depCur + 1);
+document.getElementById('depPrev').onclick = () => goToDep(depCur - 1);
+depTimer = setInterval(() => goToDep(depCur + 1), 6000);
+</script>
+</body>
+</html>

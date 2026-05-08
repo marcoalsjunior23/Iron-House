@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planos — Iron House</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.sec-planos { padding: 6rem 3rem; background: var(--preto); }
+
+.planos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--cinza);
+  border: 1px solid var(--cinza);
+  margin-bottom: 5rem;
+}
+
+.plano-card {
+  background: var(--preto-2);
+  padding: 3rem 2.5rem;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+  transition: background .2s;
+}
+
+.plano-card:hover { background: var(--preto-3); }
+
+.plano-destaque {
+  background: var(--vermelho) !important;
+}
+
+.plano-destaque * { color: var(--preto) !important; }
+.plano-destaque .plano-preco-num { color: var(--preto) !important; }
+.plano-destaque .plano-item i { color: rgba(10,10,10,.5) !important; }
+.plano-destaque .btn-iron { background: var(--preto) !important; color: var(--branco) !important; }
+.plano-destaque .btn-iron:hover { background: var(--preto-3) !important; }
+.plano-destaque hr { border-color: rgba(10,10,10,.2) !important; }
+
+.plano-badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  background: var(--preto); color: var(--vermelho);
+  padding: .25rem .8rem;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+}
+
+.plano-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; letter-spacing: .06em; line-height: 1;
+  color: var(--branco); margin-bottom: .5rem;
+}
+
+.plano-desc {
+  font-size: .88rem; font-weight: 300;
+  color: var(--cinza-med); margin-bottom: 2rem; line-height: 1.7;
+}
+
+.plano-destaque .plano-desc { color: rgba(10,10,10,.65); }
+
+.plano-preco {
+  display: flex; align-items: baseline; gap: .4rem;
+  margin-bottom: .25rem;
+}
+
+.plano-preco-cifrao {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--vermelho);
+}
+
+.plano-destaque .plano-preco-cifrao { color: var(--preto) !important; }
+
+.plano-preco-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem; letter-spacing: .02em; line-height: 1;
+  color: var(--branco);
+}
+
+.plano-preco-per {
+  font-size: .82rem; color: var(--cinza-med);
+}
+
+.plano-destaque .plano-preco-per { color: rgba(10,10,10,.55); }
+
+.plano-adesao {
+  font-size: .78rem; color: var(--cinza-med);
+  margin-bottom: 2rem;
+}
+
+.plano-divider {
+  border-top: 1px solid var(--cinza);
+  margin: 1.5rem 0;
+}
+
+.plano-lista {
+  list-style: none; padding: 0; margin: 0 0 2rem;
+  display: flex; flex-direction: column; gap: .75rem;
+  flex: 1;
+}
+
+.plano-item {
+  display: flex; align-items: flex-start; gap: .7rem;
+  font-size: .9rem; font-weight: 300; color: var(--branco-2);
+  line-height: 1.4;
+}
+
+.plano-item i { color: var(--vermelho); font-size: .85rem; margin-top: .1rem; flex-shrink: 0; }
+.plano-item.disabled { color: var(--cinza-med); }
+.plano-item.disabled i { color: var(--cinza-med); }
+
+/* FAQ */
+.sec-faq {
+  padding: 5rem 3rem;
+  background: var(--preto-2);
+  border-top: 1px solid var(--cinza);
+}
+
+.faq-lista { max-width: 800px; margin: 3rem auto 0; }
+
+.faq-item {
+  border-bottom: 1px solid var(--cinza);
+}
+
+.faq-btn {
+  width: 100%; background: none; border: none; cursor: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 0; gap: 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.05rem; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--branco); text-align: left;
+  transition: color .2s;
+}
+
+.faq-btn:hover { color: var(--vermelho); }
+
+.faq-icon {
+  font-size: .9rem; color: var(--vermelho);
+  flex-shrink: 0; transition: transform .3s;
+}
+
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-corpo {
+  overflow: hidden; max-height: 0;
+  transition: max-height .4s ease;
+}
+
+.faq-corpo p {
+  font-size: .9rem; font-weight: 300;
+  color: var(--cinza-med); line-height: 1.85;
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  .planos-grid { grid-template-columns: 1fr; }
+  .sec-planos, .sec-faq { padding: 4rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+<a href="https://wa.me/5519999990000" class="wa-float" target="_blank"><i class="bi bi-whatsapp"></i></a>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">IRON<span>HOUSE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="modalidades.html">Modalidades</a></li>
+    <li><a href="planos.html">Planos</a></li>
+    <li><a href="equipe.html">Equipe</a></li>
+    <li><a href="contato.html">Contato</a></li>
+    <li><a href="https://wa.me/5519999990000" class="nav-cta" target="_blank">Matricule-se</a></li>
+  </ul>
+  <button class="nav-toggle"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1400&q=80')"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">Escolha seu plano</span>
+    <h1>PLANOS<br>& PREÇOS</h1>
+  </div>
+</div>
+
+<section class="sec-planos">
+  <div class="text-center reveal" style="margin-bottom:3rem">
+    <span class="sec-label">Sem letra miúda</span>
+    <h2 class="sec-title">ESCOLHA<br>O SEU PLANO</h2>
+    <p style="color:var(--cinza-med);font-size:.95rem;margin-top:1rem;font-weight:300">Todos os planos incluem aula experimental gratuita. Sem fidelidade obrigatória.</p>
+  </div>
+
+  <div class="planos-grid">
+
+    <!-- BÁSICO -->
+    <div class="plano-card reveal">
+      <div class="plano-nome">BÁSICO</div>
+      <p class="plano-desc">Perfeito pra quem está começando. Acesso à musculação e ao funcional.</p>
+      <div class="plano-preco">
+        <span class="plano-preco-cifrao">R$</span>
+        <span class="plano-preco-num">149</span>
+        <span class="plano-preco-per">/mês</span>
+      </div>
+      <p class="plano-adesao">Adesão: R$ 50,00</p>
+      <hr class="plano-divider">
+      <ul class="plano-lista">
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Acesso à musculação</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Acesso ao funcional</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Vestiários completos</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>App de treino</li>
+        <li class="plano-item disabled"><i class="bi bi-x-lg"></i>CrossFit</li>
+        <li class="plano-item disabled"><i class="bi bi-x-lg"></i>Spinning</li>
+        <li class="plano-item disabled"><i class="bi bi-x-lg"></i>Avaliação física</li>
+        <li class="plano-item disabled"><i class="bi bi-x-lg"></i>Nutricionista</li>
+      </ul>
+      <a href="https://wa.me/5519999990000" class="btn-iron" target="_blank"><i class="bi bi-whatsapp"></i>Quero esse plano</a>
+    </div>
+
+    <!-- PRO (DESTAQUE) -->
+    <div class="plano-card plano-destaque reveal" data-delay=".1">
+      <div class="plano-badge">Mais popular</div>
+      <div class="plano-nome">PRO</div>
+      <p class="plano-desc">O plano mais escolhido. Acesso completo a todas as modalidades.</p>
+      <div class="plano-preco">
+        <span class="plano-preco-cifrao">R$</span>
+        <span class="plano-preco-num">229</span>
+        <span class="plano-preco-per">/mês</span>
+      </div>
+      <p class="plano-adesao" style="color:rgba(10,10,10,.5)">Sem adesão</p>
+      <hr class="plano-divider">
+      <ul class="plano-lista">
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Acesso à musculação</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Acesso ao funcional</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>CrossFit ilimitado</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Spinning ilimitado</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Vestiários completos</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>App de treino</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Avaliação física mensal</li>
+        <li class="plano-item disabled" style="color:rgba(10,10,10,.4)"><i class="bi bi-x-lg"></i>Nutricionista</li>
+      </ul>
+      <a href="https://wa.me/5519999990000" class="btn-iron" target="_blank"><i class="bi bi-whatsapp"></i>Quero esse plano</a>
+    </div>
+
+    <!-- ELITE -->
+    <div class="plano-card reveal" data-delay=".2">
+      <div class="plano-nome">ELITE</div>
+      <p class="plano-desc">A experiência Iron House completa. Para quem leva o resultado a sério.</p>
+      <div class="plano-preco">
+        <span class="plano-preco-cifrao">R$</span>
+        <span class="plano-preco-num">329</span>
+        <span class="plano-preco-per">/mês</span>
+      </div>
+      <p class="plano-adesao">Sem adesão · Aula grátis inclusa</p>
+      <hr class="plano-divider">
+      <ul class="plano-lista">
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Tudo do plano Pro</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Consultas com nutricionista</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Personal training 2x/semana</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Programação individualizada</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Acesso 24h (com app)</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Avaliação física quinzenal</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Desconto em suplementos</li>
+        <li class="plano-item"><i class="bi bi-check-lg"></i>Prioridade no agendamento</li>
+      </ul>
+      <a href="https://wa.me/5519999990000" class="btn-iron" target="_blank"><i class="bi bi-whatsapp"></i>Quero esse plano</a>
+    </div>
+
+  </div>
+
+  <!-- CTA aula grátis -->
+  <div class="text-center reveal">
+    <p style="color:var(--cinza-med);font-size:.9rem;margin-bottom:1.5rem;font-weight:300">Ainda não tem certeza? Comece com uma aula experimental completamente grátis.</p>
+    <a href="https://wa.me/5519999990000" class="btn-outline-iron" target="_blank"><i class="bi bi-lightning-charge-fill"></i>Agendar aula grátis</a>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec-faq">
+  <div class="text-center reveal">
+    <span class="sec-label">Dúvidas frequentes</span>
+    <h2 class="sec-title">FAQ</h2>
+  </div>
+
+  <div class="faq-lista reveal">
+    <div class="faq-item">
+      <button class="faq-btn">Tem fidelidade? <i class="bi bi-plus faq-icon"></i></button>
+      <div class="faq-corpo"><p>Não. Nenhum dos nossos planos tem fidelidade obrigatória. Você pode cancelar quando quiser, sem multa.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn">Posso trocar de plano? <i class="bi bi-plus faq-icon"></i></button>
+      <div class="faq-corpo"><p>Sim, sempre. Você pode fazer upgrade ou downgrade de plano a qualquer momento. A diferença é cobrada ou creditada proporcionalmente.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn">Preciso ter experiência pra entrar? <i class="bi bi-plus faq-icon"></i></button>
+      <div class="faq-corpo"><p>Não. Nosso CrossFit tem turmas de iniciantes com coaches dedicados. Você aprende do zero com segurança e progressão adequada.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn">Como funciona a aula grátis? <i class="bi bi-plus faq-icon"></i></button>
+      <div class="faq-corpo"><p>É simples: você manda mensagem pelo WhatsApp, agendamos um horário e você vem treinar sem pagar nada. Sem compromisso, sem pressão de vendas na sua cara.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn">Quais formas de pagamento? <i class="bi bi-plus faq-icon"></i></button>
+      <div class="faq-corpo"><p>Aceitamos cartão de crédito (até 12x), débito, PIX e boleto. O pagamento é feito diretamente na recepção ou pelo aplicativo.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div class="rodape-grid">
+    <div>
+      <a href="index.html" class="rodape-brand">IRON<span>HOUSE</span></a>
+      <p class="rodape-desc">CrossFit & Treino Funcional em Campinas.</p>
+      <div class="rodape-sociais">
+        <a href="#"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-facebook"></i></a>
+        <a href="#"><i class="bi bi-youtube"></i></a>
+        <a href="#"><i class="bi bi-tiktok"></i></a>
+      </div>
+    </div>
+    <div>
+      <p class="rodape-titulo">Navegação</p>
+      <ul class="rodape-lista">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modalidades.html">Modalidades</a></li>
+        <li><a href="planos.html">Planos</a></li>
+        <li><a href="equipe.html">Equipe</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="rodape-titulo">Contato</p>
+      <p class="rodape-info"><i class="bi bi-geo-alt-fill"></i>Rua João Barreto, 320 – Cambuí<br>Campinas, SP<br><br><i class="bi bi-whatsapp"></i>(19) 99999-0000</p>
+    </div>
+  </div>
+  <div class="rodape-bottom">
+    <p>© 2026 Iron House CrossFit & Treino Funcional · Todos os direitos reservados</p>
+    <p class="rodape-ficticio"><i class="bi bi-info-circle me-1"></i>Este é um estabelecimento fictício criado exclusivamente para fins de portfólio.</p>
+    <p class="rodape-credito">Site desenvolvido por <a href="#">Marco</a> · Portfólio de desenvolvimento web</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const corpo = item.querySelector('.faq-corpo');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-corpo').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      corpo.style.maxHeight = corpo.scrollHeight + 'px';
+    }
+  });
+});
+</script>
+</body>
+</html>

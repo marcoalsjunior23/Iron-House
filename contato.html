@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato — Iron House</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+
+/* ── INFO + FORMULÁRIO ── */
+.sec-contato {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 70vh;
+}
+
+/* LADO ESQUERDO — INFO */
+.contato-info {
+  background: var(--preto-2);
+  border-right: 1px solid var(--cinza);
+  padding: 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info-bloco {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--cinza);
+}
+
+.info-bloco:first-of-type { padding-top: 0; }
+.info-bloco:last-of-type  { border-bottom: none; }
+
+.info-icon {
+  width: 44px; height: 44px;
+  background: var(--preto-3);
+  border: 1px solid var(--cinza);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--vermelho);
+  flex-shrink: 0;
+  transition: background .2s, border-color .2s;
+}
+
+.info-bloco:hover .info-icon {
+  background: var(--vermelho);
+  border-color: var(--vermelho);
+  color: var(--preto);
+}
+
+.info-lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--vermelho);
+  display: block; margin-bottom: .25rem;
+}
+
+.info-val {
+  font-size: .95rem; font-weight: 300;
+  color: var(--branco-2); line-height: 1.55;
+}
+
+.redes-sociais {
+  display: flex;
+  gap: .5rem;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--cinza);
+}
+
+.rede-btn {
+  width: 42px; height: 42px;
+  border: 1px solid var(--cinza);
+  background: none;
+  color: var(--cinza-med);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; text-decoration: none;
+  transition: border-color .2s, color .2s, background .2s;
+}
+
+.rede-btn:hover {
+  border-color: var(--vermelho);
+  color: var(--vermelho);
+}
+
+/* LADO DIREITO — FORMULÁRIO */
+.contato-form {
+  background: var(--preto);
+  padding: 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: .06em;
+  color: var(--branco); margin-bottom: .35rem;
+}
+
+.form-sub {
+  font-size: .88rem; font-weight: 300;
+  color: var(--cinza-med); margin-bottom: 2rem; line-height: 1.7;
+}
+
+.fgroup {
+  display: flex; flex-direction: column; gap: .4rem;
+  margin-bottom: 1rem;
+}
+
+.fgroup label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cinza-med);
+}
+
+.fgroup input,
+.fgroup select,
+.fgroup textarea {
+  font-family: 'Barlow', sans-serif;
+  font-size: .9rem; font-weight: 300;
+  color: var(--branco);
+  background: var(--preto-2);
+  border: 1px solid var(--cinza);
+  padding: .8rem 1rem;
+  outline: none; width: 100%;
+  transition: border-color .2s, background .2s;
+}
+
+.fgroup input::placeholder,
+.fgroup textarea::placeholder { color: var(--cinza-med); }
+
+.fgroup input:focus,
+.fgroup select:focus,
+.fgroup textarea:focus {
+  border-color: var(--vermelho);
+  background: var(--preto-3);
+}
+
+.fgroup textarea { resize: none; }
+
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.btn-enviar {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  width: 100%;
+  background: var(--vermelho); color: var(--preto);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .88rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  padding: .95rem 2rem; border: none; cursor: none;
+  transition: background .2s, transform .15s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.btn-enviar:hover { background: var(--verm-esc); transform: translateY(-2px); }
+
+/* ── MAPA / LOCALIZAÇÃO ── */
+.sec-mapa {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--cinza);
+}
+
+.mapa-img {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+}
+
+.mapa-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(.3) saturate(.2);
+  transition: filter .5s;
+}
+
+.mapa-img:hover img { filter: brightness(.4) saturate(.4); }
+
+.mapa-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 60%, var(--preto-2) 100%);
+}
+
+.mapa-pin {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+}
+
+.mapa-pin i {
+  font-size: 2.5rem; color: var(--vermelho);
+  filter: drop-shadow(0 0 12px rgba(229,62,62,.5));
+  animation: bounce 2s infinite;
+}
+
+.mapa-pin span {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--branco);
+  background: rgba(10,10,10,.85);
+  padding: .3rem .8rem;
+}
+
+.horarios {
+  background: var(--preto-2);
+  padding: 4rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.horario-titulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: var(--vermelho); margin-bottom: 1.5rem;
+}
+
+.horario-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .85rem 0; border-bottom: 1px solid var(--cinza);
+  font-size: .9rem;
+}
+
+.horario-item:last-of-type { border-bottom: none; }
+
+.horario-dia { font-weight: 400; color: var(--branco-2); }
+.horario-hora { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .06em; color: var(--branco); }
+.horario-fechado { color: var(--cinza-med) !important; font-style: italic; }
+
+/* ── FAQ ── */
+.sec-faq-cont {
+  padding: 5rem 3rem;
+  background: var(--preto);
+  border-top: 1px solid var(--cinza);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 3rem;
+  margin-top: 3rem;
+}
+
+.faq-item { border-bottom: 1px solid var(--cinza); }
+
+.faq-btn {
+  width: 100%; background: none; border: none; cursor: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 0; gap: 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: .95rem; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  color: var(--branco); text-align: left;
+  transition: color .2s;
+}
+
+.faq-btn:hover { color: var(--vermelho); }
+
+.faq-icon {
+  font-size: .85rem; color: var(--vermelho);
+  flex-shrink: 0; transition: transform .3s;
+}
+
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+
+.faq-corpo {
+  overflow: hidden; max-height: 0;
+  transition: max-height .4s ease;
+}
+
+.faq-corpo p {
+  font-size: .88rem; font-weight: 300;
+  color: var(--cinza-med); line-height: 1.85;
+  padding-bottom: 1.25rem;
+}
+
+/* ── RESPONSIVO ── */
+@media (max-width: 991px) {
+  .sec-contato { grid-template-columns: 1fr; }
+  .contato-info { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--cinza); }
+  .contato-form { padding: 3rem 1.5rem; }
+  .frow { grid-template-columns: 1fr; }
+  .sec-mapa { grid-template-columns: 1fr; }
+  .mapa-img { min-height: 260px; }
+  .horarios { padding: 3rem 1.5rem; }
+  .sec-faq-cont { padding: 4rem 1.5rem; }
+  .faq-grid { grid-template-columns: 1fr; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%       { transform: translate(-50%, -50%) translateY(-8px); }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<a href="https://wa.me/5519999990000" class="wa-float" target="_blank">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<!-- NAVBAR -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">IRON<span>HOUSE</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="modalidades.html">Modalidades</a></li>
+    <li><a href="planos.html">Planos</a></li>
+    <li><a href="equipe.html">Equipe</a></li>
+    <li><a href="contato.html">Contato</a></li>
+    <li><a href="https://wa.me/5519999990000" class="nav-cta" target="_blank">Matricule-se</a></li>
+  </ul>
+  <button class="nav-toggle"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1400&q=80')"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">Fale com a gente</span>
+    <h1>CON<br>TATO</h1>
+  </div>
+</div>
+
+<!-- CONTATO SPLITSCREEN -->
+<div class="sec-contato">
+
+  <!-- INFO -->
+  <div class="contato-info reveal-left">
+    <span class="sec-label" style="margin-bottom:2rem">Onde nos encontrar</span>
+
+    <div class="info-bloco">
+      <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+      <div>
+        <span class="info-lbl">Endereço</span>
+        <span class="info-val">Rua João Barreto, 320<br>Cambuí · Campinas, SP · 13025-000</span>
+      </div>
+    </div>
+
+    <div class="info-bloco">
+      <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+      <div>
+        <span class="info-lbl">Telefone</span>
+        <span class="info-val">(19) 99999-0000</span>
+      </div>
+    </div>
+
+    <div class="info-bloco">
+      <div class="info-icon"><i class="bi bi-whatsapp"></i></div>
+      <div>
+        <span class="info-lbl">WhatsApp</span>
+        <span class="info-val">(19) 99999-0000</span>
+      </div>
+    </div>
+
+    <div class="info-bloco">
+      <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+      <div>
+        <span class="info-lbl">E-mail</span>
+        <span class="info-val">contato@ironhouse.com.br</span>
+      </div>
+    </div>
+
+    <div class="info-bloco">
+      <div class="info-icon"><i class="bi bi-instagram"></i></div>
+      <div>
+        <span class="info-lbl">Instagram</span>
+        <span class="info-val">@ironhouse.campinas</span>
+      </div>
+    </div>
+
+    <div class="redes-sociais">
+      <a href="#" class="rede-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="#" class="rede-btn" title="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="rede-btn" title="YouTube"><i class="bi bi-youtube"></i></a>
+      <a href="#" class="rede-btn" title="TikTok"><i class="bi bi-tiktok"></i></a>
+      <a href="https://wa.me/5519999990000" class="rede-btn" title="WhatsApp" target="_blank"><i class="bi bi-whatsapp"></i></a>
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div class="contato-form reveal-right">
+    <div class="form-titulo">MANDE UMA MENSAGEM</div>
+    <p class="form-sub">Quer tirar uma dúvida, agendar uma visita ou falar sobre matrícula? Preenche e a gente responde em até 24h.</p>
+
+    <form onsubmit="enviarForm(event)">
+      <div class="frow">
+        <div class="fgroup">
+          <label>Nome</label>
+          <input type="text" placeholder="Seu nome completo">
+        </div>
+        <div class="fgroup">
+          <label>Telefone</label>
+          <input type="tel" placeholder="(19) 99999-0000">
+        </div>
+      </div>
+
+      <div class="fgroup">
+        <label>E-mail</label>
+        <input type="email" placeholder="seu@email.com">
+      </div>
+
+      <div class="fgroup">
+        <label>Assunto</label>
+        <select>
+          <option value="" disabled selected>Selecione...</option>
+          <option>Quero me matricular</option>
+          <option>Agendar aula experimental</option>
+          <option>Dúvidas sobre planos</option>
+          <option>Informações sobre modalidades</option>
+          <option>Outro</option>
+        </select>
+      </div>
+
+      <div class="fgroup">
+        <label>Mensagem</label>
+        <textarea rows="4" placeholder="Conta pra gente o que você precisa..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-enviar">
+        <i class="bi bi-send"></i> Enviar mensagem
+      </button>
+
+      <p style="font-family:'Barlow Condensed',sans-serif;font-size:.7rem;color:var(--cinza-med);letter-spacing:.06em;margin-top:.85rem;text-align:center">
+        Ou fale direto pelo <a href="https://wa.me/5519999990000" target="_blank" style="color:var(--vermelho);text-decoration:none">WhatsApp</a> — resposta imediata.
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<!-- MAPA + HORÁRIOS -->
+<div class="sec-mapa">
+  <div class="mapa-img">
+    <img src="https://images.unsplash.com/photo-1570655652364-2e0a67455ac6?w=900&q=80" alt="Localização Iron House" loading="lazy">
+    <div class="mapa-overlay"></div>
+    <div class="mapa-pin">
+      <i class="bi bi-geo-alt-fill"></i>
+      <span>Iron House · Cambuí</span>
+    </div>
+  </div>
+
+  <div class="horarios reveal">
+    <span class="horario-titulo"><i class="bi bi-clock me-1"></i>Horários de funcionamento</span>
+
+    <div class="horario-item">
+      <span class="horario-dia">Segunda-feira</span>
+      <span class="horario-hora">06h às 22h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Terça-feira</span>
+      <span class="horario-hora">06h às 22h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Quarta-feira</span>
+      <span class="horario-hora">06h às 22h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Quinta-feira</span>
+      <span class="horario-hora">06h às 22h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Sexta-feira</span>
+      <span class="horario-hora">06h às 22h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Sábado</span>
+      <span class="horario-hora">08h às 16h</span>
+    </div>
+    <div class="horario-item">
+      <span class="horario-dia">Domingo</span>
+      <span class="horario-hora horario-fechado">09h às 13h</span>
+    </div>
+
+    <a href="https://wa.me/5519999990000" class="btn-iron mt-4 d-inline-flex" target="_blank" style="font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--vermelho);color:var(--preto);padding:.85rem 1.8rem;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));transition:background .2s">
+      <i class="bi bi-lightning-charge-fill"></i> Agendar aula grátis
+    </a>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section class="sec-faq-cont">
+  <div class="reveal">
+    <span class="sec-label">Dúvidas frequentes</span>
+    <h2 class="sec-title">FAQ</h2>
+  </div>
+
+  <div class="faq-grid">
+
+    <div>
+      <div class="faq-item">
+        <button class="faq-btn">Como funciona a aula experimental? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>É simples: você manda mensagem no WhatsApp, agendamos um horário e você vem treinar sem pagar nada. Sem compromisso, sem pressão. A aula é 100% grátis.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">Preciso ter experiência pra treinar? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>Não. Temos turmas para iniciantes com coaches dedicados. Você aprende do zero com segurança, no seu ritmo, com progressão adequada ao seu nível.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">Os planos têm fidelidade? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>Não. Nenhum dos nossos planos exige fidelidade. Você pode cancelar quando quiser, sem multa e sem burocracia.</p></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="faq-item">
+        <button class="faq-btn">Quais formas de pagamento? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>Aceitamos cartão de crédito (até 12x), débito, PIX e boleto bancário. O pagamento é feito na recepção ou pelo nosso aplicativo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">Posso trocar de plano depois? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>Sim, a qualquer momento. Você pode fazer upgrade ou downgrade do seu plano. A diferença é cobrada ou creditada de forma proporcional.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn">Tem estacionamento? <i class="bi bi-plus faq-icon"></i></button>
+        <div class="faq-corpo"><p>Sim. Temos estacionamento gratuito para alunos no período de treino. Também somos bem servidos de transporte público — várias linhas passam em frente.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="rodape">
+  <div class="container">
+    <div class="rodape-grid">
+      <div>
+        <a href="index.html" class="rodape-brand">IRON<span>HOUSE</span></a>
+        <p class="rodape-desc">CrossFit & Treino Funcional em Campinas. Aqui o treino é sério. O resultado também.</p>
+        <div class="rodape-sociais">
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-youtube"></i></a>
+          <a href="#"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+      <div>
+        <p class="rodape-titulo">Navegação</p>
+        <ul class="rodape-lista">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="modalidades.html">Modalidades</a></li>
+          <li><a href="planos.html">Planos</a></li>
+          <li><a href="equipe.html">Equipe</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="rodape-titulo">Contato</p>
+        <p class="rodape-info">
+          <i class="bi bi-geo-alt-fill"></i>Rua João Barreto, 320 – Cambuí<br>
+          Campinas, SP – 13025-000<br><br>
+          <i class="bi bi-clock-fill"></i>Seg–Sex: 6h às 22h<br>
+          Sáb: 8h às 16h · Dom: 9h às 13h<br><br>
+          <i class="bi bi-whatsapp"></i>(19) 99999-0000
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Iron House CrossFit & Treino Funcional · Todos os direitos reservados</p>
+      <p class="rodape-ficticio"><i class="bi bi-info-circle me-1"></i>Este é um estabelecimento fictício criado exclusivamente para fins de portfólio.</p>
+      <p class="rodape-credito">Site desenvolvido por <a href="#">Marco</a> · Portfólio de desenvolvimento web</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script>
+/* ── FAQ ── */
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item  = btn.closest('.faq-item');
+    const corpo = item.querySelector('.faq-corpo');
+    const open  = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-corpo').style.maxHeight = '0';
+    });
+    if (!open) {
+      item.classList.add('open');
+      corpo.style.maxHeight = corpo.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ── FORM ── */
+function enviarForm(e) {
+  e.preventDefault();
+  const btn  = e.target.querySelector('.btn-enviar');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '<i class="bi bi-check-lg"></i> Mensagem enviada!';
+  btn.style.background = 'var(--verm-esc)';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.innerHTML = orig;
+    btn.style.background = '';
+    btn.disabled = false;
+    e.target.reset();
+  }, 3500);
+}
+</script>
+</body>
+</html>
